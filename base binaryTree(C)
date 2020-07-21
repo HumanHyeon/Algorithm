@@ -1,0 +1,43 @@
+#include <iostream>
+using namespace std;
+
+typedef struct binaryTree {
+	int data;
+	struct binaryTree* left;
+	struct binaryTree* right;
+}Node;
+
+Node* appendTree(Node* root, int data) {
+	if (root == NULL) {
+		root = (Node*)malloc(sizeof(Node));
+		root->left = root->right = NULL;
+		root->data = data;
+		return root;
+	}
+	else {
+		if (root->data > data)
+			root->left = appendTree(root->left, data);
+		else
+			root->right = appendTree(root->right, data);
+	}
+	return root;
+}
+
+void printTree(Node* root) {
+	if (root == NULL)	return;
+	cout << root->data << " ";
+	printTree(root->left);
+	printTree(root->right);
+}
+
+int main() {
+	Node* root = NULL;
+
+	root = appendTree(root, 5);
+	root = appendTree(root, 9);
+	root = appendTree(root, 6);
+	root = appendTree(root, 3);
+	root = appendTree(root, 1);
+
+	printTree(root);
+}
