@@ -26,18 +26,65 @@ Node* appendTree(Node* root, int data) {
 void printTree(Node* root) {
 	if (root == NULL)	return;
 	cout << root->data << " ";
+	//cout << "left-";
 	printTree(root->left);
+	//cout << "right-";
 	printTree(root->right);
+}
+
+Node* findMinTree(Node* root) {
+	Node* min = root;
+	while (min->left != NULL)
+		min = min->left;
+	return min;
+}
+
+Node* searchTree(Node* root, int data) {
+	if (root == NULL)	return NULL;
+	if (root->data == data) return root;
+	else if (root->data > data)	return searchTree(root->left, data);
+	else	return searchTree(root->right, data);
+}
+
+Node* deleteTree(Node* root, int data) {
+	if (root == NULL) return NULL;
+
+	Node* tNode = NULL;
+	if (root->data > data)		root->left = deleteTree(root->left, data);
+	else if (root->data < data)	root->right = deleteTree(root->right, data);
+	else if (root->data == data) {	
+		if (root->right != NULL && root->left != NULL) {
+			tNode = findMinTree(root->right);
+			root->data = tNode->data;
+			root->right = deleteTree(root->right, tNode->data);
+		}
+		else {
+			tNode = (root->left == NULL) ? root->right : root->left;
+			free(root);
+			return tNode;
+		}
+	}
+	return root;
 }
 
 int main() {
 	Node* root = NULL;
 
-	root = appendTree(root, 5);
-	root = appendTree(root, 9);
-	root = appendTree(root, 6);
-	root = appendTree(root, 3);
-	root = appendTree(root, 1);
+	int arr[] = { 5, 9, 6, 3, 1, 2, 4, 8, 7 };
+	
+	for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); i++)
+		root = appendTree(root, arr[i]);
 
+	printTree(root);
+	cout << '\n';
+
+	Node* min = findMinTree(root);
+	cout << min->data << endl;
+
+	Node* search = searchTree(root, 2);
+	if (search != NULL) cout << search->data << endl;
+	else cout << "Nothing" << endl;
+
+	root = deleteTree(root, 1);
 	printTree(root);
 }
