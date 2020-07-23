@@ -36,3 +36,5 @@ int main() {
 	delete[] intermediate;
 	delete[] result;
 }
+
+시간 복잡도 : O(n+k) //k == 가장 큰 수
