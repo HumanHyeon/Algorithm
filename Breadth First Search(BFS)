@@ -1,0 +1,69 @@
+#include <iostream>
+#include <queue>
+#include <vector>
+using namespace std;
+
+bool visit[10];
+vector<int> relate[10];
+
+void BFS(int start) {
+	queue<int> q;
+	q.push(start);
+	visit[start] = true;
+
+	while (!q.empty()) {
+		int tmp = q.front();
+		q.pop();
+		cout << tmp << " ";
+
+		for (int i = 0; i < relate[tmp].size(); i++) {
+			int location = relate[tmp][i];
+			if (!visit[location]) {
+				q.push(location);
+				visit[location] = true;
+			}
+		}
+	}
+}
+
+int main() {
+/*
+			1
+		2		3
+	4	5		6	7
+	|	|	
+	8	9
+*/
+	relate[1].push_back(2);
+	relate[2].push_back(1);
+
+	relate[1].push_back(3);
+	relate[3].push_back(1);
+
+	relate[2].push_back(4);
+	relate[4].push_back(2);
+
+	relate[2].push_back(5);
+	relate[5].push_back(2);
+
+	relate[4].push_back(8);
+	relate[8].push_back(4);
+
+	relate[5].push_back(9);
+	relate[9].push_back(5);
+
+	relate[3].push_back(6);
+	relate[6].push_back(3);
+
+	relate[3].push_back(7);
+	relate[7].push_back(3);
+
+	BFS(2);
+}
+
+//1. 큐 선언
+//2. 루트 노드 큐 삽입
+//3. 큐가 empty가 아닐 때까지 반복
+//		큐 맨 앞 추출 후 방문
+//		해당 위치 주변에 있는 모든 것을 탐색 : 방문한 적 없으면 큐에 삽입, 있으면 넘어감
+//		반복
