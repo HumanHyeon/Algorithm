@@ -1,0 +1,117 @@
+#include <iostream>
+using namespace std;
+
+template <typename B>
+class BinaryTree;
+
+template<typename A>
+class Node {
+    friend class BinaryTree<A>;
+private:
+    Node* left;
+    Node* right;
+    A data;
+public:
+    Node(A data = 0, Node* left = NULL, Node* right = NULL) {
+        this->data = data;
+        this->left = left;
+        this->right = right;
+    }
+}; 
+
+template<typename B>
+class BinaryTree {
+private:
+    Node<B>* root;
+public:
+    BinaryTree(B data = 0) : root(new Node<B>(data)) {};
+    Node<B>* getRoot() { return root; };
+    void printTree(Node<B>* root);
+    Node<B>* appendTree(Node<B>* root, B data);
+    Node<B>* findMinTree(Node<B>* root);
+    Node<B>* searchTree(Node<B>* root, B data);
+    Node<B>* deleteTree(Node<B>* root, B data);
+};
+
+template<typename B>
+void BinaryTree<B>::printTree(Node<B>* root) {
+    if (root == NULL)    return;
+    cout << root->data << " ";
+    printTree(root->left);
+    printTree(root->right);
+}
+
+template<typename B>
+Node<B>* BinaryTree<B>::appendTree(Node<B>* root, B data) {
+    if (root == NULL) {
+        root =  new Node<B>(data);
+        root->left = root->right = NULL;
+        root->data = data;
+        return root;
+    }
+    else {
+        if (root->data > data) root->left = appendTree(root->left, data);
+        else root->right = appendTree(root->right, data);
+    }
+    return root;
+}
+
+template<typename B>
+Node<B>* BinaryTree<B>::findMinTree(Node<B>* root) {
+    Node<B>* min = root;
+    while (min->left != NULL)    min = min->left;
+    return min;
+}
+
+template<typename B>
+Node<B>* BinaryTree<B>::searchTree(Node<B>* root, B data) {
+    if (root == NULL)    return NULL;
+    if (root->data == data)  return root;
+    else if (root->data > data) return searchTree(root->left, data);
+    else return searchTree(root->right, data);
+}
+
+template<typename B>
+Node<B>* BinaryTree<B>::deleteTree(Node<B>* root, B data) {
+    if (root == NULL)    return NULL;
+
+    Node<B>* tNode = NULL;
+    if (root->data > data)   root->left = deleteTree(root->left, data);
+    else if (root->data < data)  root->right = deleteTree(root->right, data);
+    else if (root->data == data) {
+        if (root->right != NULL && root->left != NULL) {
+            tNode = findMinTree(root->right);
+            root->data = tNode->data;
+            root->right = deleteTree(root->right, tNode->data);
+        }
+        else {
+            tNode = (root->left == NULL) ? root->right : root->left;
+            free(root);
+            return tNode;
+        }
+    }
+    return root;
+}
+
+int main() {
+    BinaryTree<int>* BST = new BinaryTree<int>();
+    Node<int>* root = BST->getRoot();
+
+    int arr[] = { 5, 9, 6, 3, 1, 2, 4, 8, 7 };
+
+    for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); i++)
+        root = BST->appendTree(root, arr[i]);
+
+    BST->printTree(root);
+    putchar('\n');
+
+    //Node<int>* min = BST->findMinTree(root);
+   
+    Node<int>* search = BST->searchTree(root, -1);
+    if (search != NULL)  cout << "find" << endl;
+    else cout << "can't find" << endl;
+
+    root = BST->deleteTree(root, 1);
+    BST->printTree(root);
+    putchar('\n');
+}
