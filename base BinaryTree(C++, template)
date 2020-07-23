@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 using namespace std;
 
 template <typename B>
@@ -31,6 +32,7 @@ public:
     Node<B>* findMinTree(Node<B>* root);
     Node<B>* searchTree(Node<B>* root, B data);
     Node<B>* deleteTree(Node<B>* root, B data);
+    void printLevelTraversal(Node<B>* root);
 };
 
 template<typename B>
@@ -93,15 +95,32 @@ Node<B>* BinaryTree<B>::deleteTree(Node<B>* root, B data) {
     return root;
 }
 
+template<typename B>
+void BinaryTree<B>::printLevelTraversal(Node<B>* root) {
+    queue<Node<B>*> circuit;   //큐 생성 및 초기화
+    if (root)    circuit.push(root);    //큐에 루트 노드 삽입
+    while (!circuit.empty()) {  //큐가 empty일 때까지 반복
+        Node<B>* tmp = circuit.front(); //추출
+        circuit.pop();                  //추출
+        cout << tmp->data << " ";       //방문
+        if (tmp->left) circuit.push(tmp->left);     //왼쪽 자식 있을 시 삽입
+        if (tmp->right) circuit.push(tmp->right);   //오른쪽 자식 있을 시 삽입
+    }
+    putchar('\n');
+}
+
+
 int main() {
-    BinaryTree<int>* BST = new BinaryTree<int>();
+    BinaryTree<int>* BST = new BinaryTree<int>(5);
     Node<int>* root = BST->getRoot();
 
-    int arr[] = { 5, 9, 6, 3, 1, 2, 4, 8, 7 };
+    int arr[] = { 9, 6, 3, 1, 2, 4, 8, 7 };
 
     for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); i++)
         root = BST->appendTree(root, arr[i]);
 
+
+    BST->printLevelTraversal(root);
     BST->printTree(root);
     putchar('\n');
 
@@ -114,4 +133,5 @@ int main() {
     root = BST->deleteTree(root, 1);
     BST->printTree(root);
     putchar('\n');
+
 }
