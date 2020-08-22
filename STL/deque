@@ -1,0 +1,47 @@
+#include <iostream>
+#include <deque>
+#define FOR(V) for(int i = 0; i < (V).size(); i++) 
+using namespace std;
+
+void PRINT(deque<int> & tmp) {
+	FOR(tmp)	cout << tmp[i] << " ";
+	cout << "\n\n";
+}
+
+int main() {
+	deque<int> dq(3, 1);
+	cout << "dq : "; PRINT(dq);
+
+	dq.push_back(2);
+	cout << "dq : "; PRINT(dq);
+
+	dq.push_front(0);
+	cout << "dq : "; PRINT(dq);
+
+	deque<int> dq2(dq);
+	cout << "dq2 : "; PRINT(dq2);
+
+	dq2.pop_front();
+	cout << "dq2 : "; PRINT(dq2);
+
+	dq2.pop_back();
+	cout << "dq2 : "; PRINT(dq2);
+
+	dq2.swap(dq);
+	cout << "swap\ndq : "; PRINT(dq);
+	cout << "dq2 : "; PRINT(dq2);
+
+	//deque<int>::const_iterator conlter = dq.begin();
+	//conlter += 2;
+	dq.insert(dq.begin() + 2, 2, 3);	//인덱스2 위치에 2개의 3값
+	cout << "insert\ndq : "; PRINT(dq);
+
+	dq.insert(dq.begin() + 3, 4);		//인덱스3 위치에 4값
+	cout << "insert\ndq : "; PRINT(dq);
+
+	dq.erase(dq.begin() + 3);			//인덱스3 위치 삭제
+	cout << "insert\ndq : "; PRINT(dq);
+
+	if (!dq2.empty())	dq2.clear();
+	cout << "dq2 : "; PRINT(dq2);
+}
