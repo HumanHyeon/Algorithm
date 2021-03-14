@@ -5,3 +5,11 @@ long long solution(long long n) {
 		if (i * i == n)	return (i + 1) * (i + 1);
 	return -1;
 }
+
+other Ver
+#include <cmath>
+
+long long solution(long long n) {
+	long long tmp = sqrt(n);
+    return powl(tmp, 2) == n ? powl(tmp + 1, 2) : -1;
+}
