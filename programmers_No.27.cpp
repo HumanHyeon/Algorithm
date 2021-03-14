@@ -1,14 +1,12 @@
 https://programmers.co.kr/learn/courses/30/lessons/12930
 
-#include <string>
 #include <sstream>
 #include <vector>
 using namespace std;
 
 string change(string s) {
     for (int i = 0; i < s.size(); i++)
-        if (i % 2) s[i] = tolower(s[i]);
-        else s[i] = toupper(s[i]);
+        i & 1 ? s[i] = tolower(s[i]) : s[i] = toupper(s[i]);
     return s;
 }
 
