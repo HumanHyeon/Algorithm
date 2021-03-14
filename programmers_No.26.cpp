@@ -10,3 +10,10 @@ double solution(vector<int> arr) {
     for(auto fetch : arr) answer += fetch;   
     return answer / arr.size();
 }
+
+
+impressive 
+double answer = accumulate(arr.begin(), arr.end(), 0);
+
+if want product
+std::accumulate(v.begin(), v.end(), 1, std::multiplies<int>());
