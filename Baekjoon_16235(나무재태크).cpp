@@ -6,9 +6,9 @@ using namespace std;
 
 
 int N, M, K;
-int food[1001][1001];
-vector<vector<vector<int>>> trees(1001, vector<vector<int>>(1001, vector<int>()));
-int b[1001][1001];
+int food[11][11];
+vector<vector<vector<int>>> trees(11, vector<vector<int>>(11, vector<int>()));
+int b[11][11];
 int answer;
 
 const int dy[] = { -1, -1, -1, 0, 0, 1, 1, 1 };
