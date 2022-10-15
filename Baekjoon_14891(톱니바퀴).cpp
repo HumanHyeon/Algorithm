@@ -54,14 +54,6 @@ void rotate(int id, int flag) {
 	}
 }
 
-void printGear() {
-	cout << "-----------------------" << endl;
-	for (int i = 0; i < 4; i++) {
-		cout << gear[i][0] << gear[i][1] << gear[i][2] << gear[i][3] << gear[i][4] << gear[i][5] << gear[i][6] << gear[i][7] << endl;
-	}
-	cout << "-----------------------" << endl;
-}
-
 void dfs(int id, int flag) {
 	int now_right = gear[id][RIGHT], now_left = gear[id][LEFT];
 	int counterFlag = (flag == CLOCKWISE ? COUNTER_CLOCKWISE : CLOCKWISE);
@@ -137,21 +129,6 @@ void init() {
 int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);	cout.tie(NULL);
-
-	//gear[0][0] = 1;
-	//gear[0][1] = 0;
-	//gear[0][2] = 1;
-	//gear[0][3] = 0;
-	//gear[0][4] = 1;
-	//gear[0][5] = 1;
-	//gear[0][6] = 1;
-	//gear[0][7] = 1;
-
-	//cout << gear[0][0] << gear[0][1] << gear[0][2] << gear[0][3] << gear[0][4] << gear[0][5] << gear[0][6] << gear[0][7] << endl;
-
-	//rotate(0, COUNTER_CLOCKWISE);
-
-	//cout << gear[0][0] << gear[0][1] << gear[0][2] << gear[0][3] << gear[0][4] << gear[0][5] << gear[0][6] << gear[0][7] << endl;
 
 	init();
 	solution();
